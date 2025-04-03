@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const User = require('./../model/user.model')
+const bcrypt = require('bcrypt')
 
 exports.signin = async (req, res, next) => {
   try {
@@ -8,7 +9,7 @@ exports.signin = async (req, res, next) => {
     }
     let user = await User.create({
       emai: req.body.email,
-      password: req.body.password
+      password: bcrypt.hashSync(req.body.password, 10),
     })
     res.status(201).json(user)
   } catch (error) {

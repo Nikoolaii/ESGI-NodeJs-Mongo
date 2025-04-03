@@ -4,8 +4,8 @@ const mongoose = require("mongoose")
 // Important minuscule pour le nom du schema
 const user = new Schema({
   email: {
-    Type: String,
-    Unique: true,
+    type: String,
+    unique: true,
     Validate: function (v) {
       return /^(.+)@(.+)$/.test(v)
     }
