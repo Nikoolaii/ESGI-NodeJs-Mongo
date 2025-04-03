@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 module.exports = (req, res, next) => {
   const token = req.headers?.authorization?.split(" ")[1]
@@ -11,7 +12,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    req.token = jwt.verify(token, "mysecretkey")
+    req.token = jwt.verify(token, process.env.JWT_SECRET)
   } catch (e) {
     res.status(401).json({
       'message': 'Your credentials are not valid.'
