@@ -19,16 +19,26 @@ exports.signin = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
+    if (!req.body.email || !req.body.password || req.body.password === "" || req.body.email === "") {
+      return res.status(400).json({ error: "Email and password are required" })
+    }
     let user = await User.findOne({ email: req.body.email })
     if (!user) {
       return res.status(401).json({
         error: "Invalid password or email"
       })
     }
-    if (user.password !== req.body.password) {
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
       return res.status(401).json({ error: "Invalid password or email" })
     }
-    return res.status(200).json(jwt.sign({ user }, "mysecretkey"))
+    return res.status(200).json({
+      _id: user._id,
+      email: user.email,
+      token: jwt.sign({
+        _id: user._id,
+        email: user.email,
+      }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
