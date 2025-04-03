@@ -11,7 +11,7 @@ database()
 
 const productRoute = require('./routes/product.route')
 const authRoute = require('./routes/auth.route')
-const authMiddleware = require('./middlewares/auth.middleware')
+const authMiddleware = require('./middleware/auth.middleware')
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')

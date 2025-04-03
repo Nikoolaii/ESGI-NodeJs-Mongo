@@ -1,16 +1,13 @@
-const { Schema } = require("mongoose");
+const { Schema } = require("mongoose")
 const mongoose = require("mongoose")
 
 // Important minuscule pour le nom du schema
 const user = new Schema({
   email: {
     type: String,
-    unique: true,
-    Validate: function (v) {
-      return /^(.+)@(.+)$/.test(v)
-    }
   },
-  password: String
+  password: String,
+  roles: Array
 })
 
 // Important ici la majuscule
