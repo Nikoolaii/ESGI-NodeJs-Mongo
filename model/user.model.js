@@ -3,7 +3,13 @@ const mongoose = require("mongoose")
 
 // Important minuscule pour le nom du schema
 const user = new Schema({
-  email: String,
+  email: {
+    Type: String,
+    Unique: true,
+    Validate: function (v) {
+      return /^(.+)@(.+)$/.test(v)
+    }
+  },
   password: String
 })
 
